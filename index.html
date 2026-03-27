@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroArcade - Sua coleção de jogos clássicos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>🎮 RETROARCADE</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="#">GAMES</a></li>
+                <li><a href="#">CONSOLES</a></li>
+            </ul>
+            <div class="search">
+                <input type="text" placeholder="Buscar jogo...">
+                <button>🔍</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>RETRO GAMES</h2>
+            <h1>Coleção de Jogos Retrô</h1>
+            <p>Reviva os clássicos, sinta o charme dos jogos da era pura</p>
+            <button class="btn-primary" onclick="scrollToGames()">EXPLORAR JOGOS</button>
+        </section>
+
+        <section class="journey">
+            <h2>Uma Jornada Através do Tempo</h2>
+            <p>Da emoção dos fliperamas às memórias dos consoles caseiros, 
+               selecionamos cuidadosamente jogos clássicos que marcaram gerações.</p>
+        </section>
+
+        <section class="games-section">
+            <h2>ÚLTIMOS JOGOS ADICIONADOS</h2>
+            <div class="games-grid" id="gamesGrid">
+                <!-- Os cards serão inseridos via JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 RetroArcade - Revivendo a nostalgia dos games</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -3,13 +3,34 @@ const games = [
     {
         id: 1,
         title: "Meu Primeiro Jogo",
-        year: "2024",
+        year: "2026",
         category: "ACTION",
         description: "Um jogo divertido para testar!",
         image: "assets/images/meujogo.jpg",
         tags: ["ACTION", "COLETAR"],
-        gamePath: "games/Meu Primeiro Jogo (2024)/index.html"  // ← caminho para seu jogo
+        gamePath: "games/Meu Primeiro Jogo (2026)/index.html"  // ← caminho para seu jogo
     },
+
+    {
+        id: 2,
+        title: "DoDonPachi (Arcade)",
+        year: "1997",
+        category: "SHOOTER",
+        description: "Clássico arcade de tiro bullet hell!",
+        image: "assets/images/dodonpachi.jpg",
+        tags: ["ARCADE", "SHOOTER", "BULLET HELL"],
+        gamePath: "games/dodonpachi/index.html"
+    },
+    {
+    id: 3,
+    title: "Super Mario Bros",
+    year: "1985",
+    category: "PLATFORM",
+    description: "O clássico do encanador!",
+    image: "assets/images/mario.jpg",
+    tags: ["NES", "PLATFORM"],
+    gamePath: "games/super-mario/index.html"   // ← caminho correto
+},
     // Adicione mais jogos aqui
 ];
 

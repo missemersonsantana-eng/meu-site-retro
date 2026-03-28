@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Super Mario Bros - RetroArcade</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0a1a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: monospace;
+        }
+        
+        .game-container {
+            background: #1e1e2e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.3);
+        }
+        
+        canvas {
+            display: block;
+            margin: 0 auto;
+            border: 2px solid #ff6b35;
+            border-radius: 5px;
+        }
+        
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        button {
+            background: #ff6b35;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background: #ff8c5a;
+        }
+        
+        .instructions {
+            text-align: center;
+            margin-top: 20px;
+            color: #ff6b35;
+            font-size: 12px;
+        }
+        
+        .instructions p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div id="emulator"></div>
+        
+        <div class="controls">
+            <button onclick="resetGame()">🔄 Reiniciar</button>
+            <button onclick="toggleFullscreen()">🎮 Tela Cheia</button>
+        </div>
+        
+        <div class="instructions">
+            <p>🎮 CONTROLES:</p>
+            <p>⬅️ ➡️ = Movimentar | ⬆️ = Entrar em canos | ⬇️ = Agachar</p>
+            <p>Z = Pular | X = Correr / Atirar fogo</p>
+            <p>Enter = Iniciar / Pausar</p>
+        </div>
+    </div>
+
+    <!-- Carregar o EmulatorJS (via CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/nes-emulator@latest/dist/nes.min.js"></script>
+    
+    <script>
+        let nes;
+        let canvas;
+        
+        // Inicializar o emulador
+        function initEmulator() {
+            const container = document.getElementById('emulator');
+            
+            // Criar canvas onde o jogo vai aparecer
+            canvas = document.createElement('canvas');
+            canvas.width = 800;
+            canvas.height = 600;
+            canvas.style.width = '100%';
+            canvas.style.height = 'auto';
+            container.appendChild(canvas);
+            
+            // Inicializar o emulador NES
+            nes = new NES({
+                canvas: canvas,
+                romUrl: 'super-mario/roms/super-mario.nes',  // ← Caminho da sua ROM
+                onReady: function() {
+                    console.log('Emulador pronto!');
+                },
+                onError: function(error) {
+                    console.error('Erro:', error);
+                    alert('Erro ao carregar o jogo. Verifique se a ROM está no local correto.');
+                }
+            });
+        }
+        
+        function resetGame() {
+            if (nes) {
+                nes.reset();
+            }
+        }
+        
+        function toggleFullscreen() {
+            const container = document.querySelector('.game-container');
+            if (container.requestFullscreen) {
+                container.requestFullscreen();
+            } else if (container.webkitRequestFullscreen) {
+                container.webkitRequestFullscreen();
+            }
+        }
+        
+        // Iniciar quando a página carregar
+        window.onload = initEmulator;
+    </script>
+</body>
+</html>

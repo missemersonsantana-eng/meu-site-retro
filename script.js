@@ -2,64 +2,15 @@
 const games = [
     {
         id: 1,
-        title: "Cadillacs and Dinosaurs",
-        year: "1993",
+        title: "Meu Primeiro Jogo",
+        year: "2024",
         category: "ACTION",
-        description: "Lute contra dinossauros e salve o mundo neste clássico arcade!",
-        image: "assets/images/cadillacs.jpg",
-        tags: ["ACTION", "SIDE-SCROLLING", "MULTIPLAYER"],
-        gamePath: "games/cadillacs/index.html"
+        description: "Um jogo divertido para testar!",
+        image: "assets/images/meujogo.jpg",
+        tags: ["ACTION", "COLETAR"],
+        gamePath: "games/Meu Primeiro Jogo (2024)/index.html"  // ← caminho para seu jogo
     },
-    {
-        id: 2,
-        title: "Dynasty Wars",
-        year: "1989",
-        category: "ACTION",
-        description: "Monte a cavalo e lute na China antiga! Derrote generais poderosos.",
-        image: "assets/images/dynasty.jpg",
-        tags: ["ACTION", "HISTORY", "BEAT 'EM UP"],
-        gamePath: "games/dynasty/index.html"
-    },
-    {
-        id: 3,
-        title: "Street Fighter II",
-        year: "1991",
-        category: "FIGHTING",
-        description: "O clássico dos jogos de luta! Escolha seu lutador e vença.",
-        image: "assets/images/sf2.jpg",
-        tags: ["FIGHTING", "ARCADE", "VS"],
-        gamePath: "games/sf2/index.html"
-    },
-    {
-        id: 4,
-        title: "Super Mario Bros",
-        year: "1985",
-        category: "PLATFORM",
-        description: "O encanador mais famoso do mundo em sua aventura clássica!",
-        image: "assets/images/mario.jpg",
-        tags: ["PLATFORM", "NINTENDO", "CLASSIC"],
-        gamePath: "games/mario/index.html"
-    },
-    {
-        id: 5,
-        title: "Sonic the Hedgehog",
-        year: "1991",
-        category: "PLATFORM",
-        description: "Corra em alta velocidade com o ouriço mais rápido do mundo!",
-        image: "assets/images/sonic.jpg",
-        tags: ["PLATFORM", "SEGA", "SPEED"],
-        gamePath: "games/sonic/index.html"
-    },
-    {
-        id: 6,
-        title: "Metal Slug",
-        year: "1996",
-        category: "SHOOTER",
-        description: "O clássico run-and-gun com gráficos incríveis e ação frenética!",
-        image: "assets/images/metalslug.jpg",
-        tags: ["SHOOTER", "ARCADE", "RUN-AND-GUN"],
-        gamePath: "games/metalslug/index.html"
-    }
+    // Adicione mais jogos aqui
 ];
 
 // Função para renderizar os cards

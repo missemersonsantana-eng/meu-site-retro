@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RetroArcade - Sua coleção de jogos clássicos</title>
+    <title>RetroArcade - Jogos Clássicos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,7 +18,7 @@
                 <li><a href="#">CONSOLES</a></li>
             </ul>
             <div class="search">
-                <input type="text" placeholder="Buscar jogo...">
+                <input type="text" id="searchInput" placeholder="Buscar jogo...">
                 <button>🔍</button>
             </div>
         </nav>
@@ -27,21 +27,15 @@
     <main>
         <section class="hero">
             <h2>RETRO GAMES</h2>
-            <h1>Coleção de Jogos Retrô</h1>
-            <p>Reviva os clássicos, sinta o charme dos jogos da era pura</p>
+            <h1>Coleção de Jogos Clássicos</h1>
+            <p>Reviva os clássicos, jogue diretamente no navegador</p>
             <button class="btn-primary" onclick="scrollToGames()">EXPLORAR JOGOS</button>
-        </section>
-
-        <section class="journey">
-            <h2>Uma Jornada Através do Tempo</h2>
-            <p>Da emoção dos fliperamas às memórias dos consoles caseiros, 
-               selecionamos cuidadosamente jogos clássicos que marcaram gerações.</p>
         </section>
 
         <section class="games-section">
             <h2>ÚLTIMOS JOGOS ADICIONADOS</h2>
             <div class="games-grid" id="gamesGrid">
-                <!-- Os cards serão inseridos via JavaScript -->
+                <!-- Os cards vão aparecer aqui via JavaScript -->
             </div>
         </section>
     </main>

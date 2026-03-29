@@ -29,6 +29,16 @@ const games = [
         image: "assets/images/street-fighter.jpg",
         slug: "street-fighter-ii",
         tags: ["FIGHTING", "ARCADE", "CAPCOM"]
+    },
+    {
+        id: 4,
+        title: "Cadillacs e Dinossauros",
+        year: "1993",
+        category: "FIGHTING",
+        description: "Cadillacs and Dinosaurs é um jogo de luta de rolagem lateral frenético que captura a energia barulhenta e acelerada dos fliperamas.",
+        image: "assets/images/cadilacedino.jpg",
+        slug: "cadillacs-and-dinosaurs-1993",
+        tags: ["FIGHTING", "ARCADE", "CAPCOM"]
     }
 ];
 

@@ -33,7 +33,7 @@ const games = [
     {
         id: 4,
         title: "Cadillacs e Dinossauros",
-        year: "1993",
+        year: "1996",
         category: "FIGHTING",
         description: "Cadillacs and Dinosaurs é um jogo de luta de rolagem lateral frenético que captura a energia barulhenta e acelerada dos fliperamas.",
         image: "assets/images/cadilacedino.jpg",
@@ -46,8 +46,8 @@ const games = [
         title: "Pokemon",
         year: "1993",
         category: "FIGHTING",
-        description: "Cadillacs and Dinosaurs é um jogo de luta de rolagem lateral frenético que captura a energia barulhenta e acelerada dos fliperamas.",
-        image: "assets/images/cadilacedino.jpg",
+        description: "Pokémon Blue Version para Game Boy é uma versão aprimorada dos lançamentos originais Pokémon Red e Green, chegando em 1996 como o primeiro lançamento internacional independente da série.",
+        image: "assets/images/pokemonblue.jpg",
         slug: "pokemon-blue-version",
         tags: ["FIGHTING", "ARCADE", "CAPCOM"]
     }

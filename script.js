@@ -7,6 +7,7 @@ const games = [
         category: "RACING",
         description: "Corrida clássica do SNES! Velocidade e adrenalina pura.",
         image: "assets/images/top-gear.jpg",
+        type: "iframe",
         slug: "top-gear",
         tags: ["RACING", "SNES", "ARCADE"]
     },
@@ -17,6 +18,7 @@ const games = [
         category: "PLATFORM",
         description: "O clássico do Mario no SNES! Aventura inesquecível.",
         image: "assets/images/mario-world.jpg",
+        type: "iframe",
         slug: "super-mario-world",
         tags: ["PLATFORM", "SNES", "NINTENDO"]
     },
@@ -27,6 +29,7 @@ const games = [
         category: "FIGHTING",
         description: "O rei dos jogos de luta! Escolha seu lutador.",
         image: "assets/images/street-fighter.jpg",
+        type: "iframe",
         slug: "street-fighter-ii",
         tags: ["FIGHTING", "ARCADE", "CAPCOM"]
     },
@@ -37,20 +40,36 @@ const games = [
         category: "FIGHTING",
         description: "Cadillacs and Dinosaurs é um jogo de luta de rolagem lateral frenético que captura a energia barulhenta e acelerada dos fliperamas.",
         image: "assets/images/cadilacedino.jpg",
+        type: "iframe",
         slug: "cadillacs-and-dinosaurs-1993",
         tags: ["FIGHTING", "ARCADE", "CAPCOM"]
     },
-
     {
         id: 5,
-        title: "Pokemon",
-        year: "1993",
-        category: "FIGHTING",
-        description: "Pokémon Blue Version para Game Boy é uma versão aprimorada dos lançamentos originais Pokémon Red e Green, chegando em 1996 como o primeiro lançamento internacional independente da série.",
+        title: "Pokemon Blue Version",
+        year: "1996",
+        category: "RPG",
+        description: "Pokémon Blue Version para Game Boy é uma versão aprimorada dos lançamentos originais Pokémon Red e Green.",
         image: "assets/images/pokemonblue.jpg",
+        type: "iframe",
         slug: "pokemon-blue-version",
-        tags: ["FIGHTING", "ARCADE", "CAPCOM"]
+        tags: ["RPG", "GAMEBOY", "NINTENDO"]
+    },
+    // ========== EXEMPLO DE JOGO LOCAL (ROM .smc) ==========
+    // Descomente e ajuste quando tiver uma ROM .smc para testar
+    /*
+    {
+        id: 6,
+        title: "Meu Jogo SNES",
+        year: "1994",
+        category: "CUSTOM",
+        description: "Minha ROM local para testar o emulador!",
+        image: "assets/images/meu-jogo.jpg",
+        type: "local",
+        romPath: "games/meu-jogo/rom.smc",
+        tags: ["SNES", "CUSTOM", "LOCAL"]
     }
+    */
 ];
 
 // URL base do ClassicJoy
@@ -82,11 +101,19 @@ function renderGames() {
 function playGame(gameId) {
     const game = games.find(g => g.id === gameId);
     if (game) {
-        // Salvar qual jogo foi escolhido
-        localStorage.setItem('currentGame', JSON.stringify({
+        // Salvar qual jogo foi escolhido (incluindo o tipo)
+        const gameData = {
             title: game.title,
-            url: BASE_URL + game.slug
-        }));
+            type: game.type
+        };
+        
+        if (game.type === 'iframe') {
+            gameData.url = BASE_URL + game.slug;
+        } else if (game.type === 'local') {
+            gameData.romPath = game.romPath;
+        }
+        
+        localStorage.setItem('currentGame', JSON.stringify(gameData));
         // Redirecionar para página do jogo
         window.location.href = 'game.html';
     }

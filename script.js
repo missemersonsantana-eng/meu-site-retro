@@ -55,9 +55,7 @@ const games = [
         slug: "pokemon-blue-version",
         tags: ["RPG", "GAMEBOY", "NINTENDO"]
     },
-    // ========== EXEMPLO DE JOGO LOCAL (ROM .smc) ==========
-    // Descomente e ajuste quando tiver uma ROM .smc para testar
-    /*
+    
     {
         id: 6,
         title: "Meu Jogo SNES",
@@ -69,7 +67,6 @@ const games = [
         romPath: "games/meu-jogo/rom.smc",
         tags: ["SNES", "CUSTOM", "LOCAL"]
     }
-    */
 ];
 
 // URL base do ClassicJoy

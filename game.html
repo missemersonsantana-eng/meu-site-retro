@@ -2,10 +2,16 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogando - RetroArcade</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .game-page { padding-top: 80px; background: #0a0a1a; min-height: 100vh; }
+        .game-page {
+            padding-top: 80px;
+            min-height: 100vh;
+            background: #0a0a1a;
+        }
+        
         .game-header {
             background: #1e1e2e;
             padding: 1rem 5%;
@@ -13,14 +19,28 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid #ff6b35;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
+        
         .back-button {
             background: #ff6b35;
             color: #fff;
             text-decoration: none;
             padding: 0.5rem 1rem;
             border-radius: 5px;
+            transition: background 0.3s;
         }
+        
+        .back-button:hover {
+            background: #ff8c5a;
+        }
+        
+        .game-title {
+            color: #ff6b35;
+            font-size: 1.2rem;
+        }
+        
         .game-area {
             display: flex;
             justify-content: center;
@@ -28,95 +48,193 @@
             padding: 2rem;
             min-height: 70vh;
         }
+        
         iframe, canvas {
             width: 800px;
             height: 600px;
             border: 2px solid #ff6b35;
             border-radius: 10px;
             background: #000;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
         }
+        
+        .info-area {
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .info-message {
+            color: #ff6b35;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .file-selector {
+            text-align: center;
+            margin: 1rem 0;
+        }
+        
+        .file-selector input {
+            background: #2a2a3a;
+            color: #fff;
+            border: 1px solid #ff6b35;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .file-selector input:hover {
+            background: #ff6b35;
+            color: #fff;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #ffaa44;
+            font-size: 18px;
+            padding: 50px;
+        }
+        
+        .error {
+            text-align: center;
+            color: #ff4444;
+            padding: 50px;
+            font-size: 16px;
+        }
+        
         @media (max-width: 900px) {
-            iframe, canvas { width: 100%; height: 450px; }
+            iframe, canvas {
+                width: 100%;
+                height: 450px;
+            }
+            
+            .game-header {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .game-title {
+                font-size: 1rem;
+                text-align: center;
+            }
         }
-        .info { text-align: center; color: #ff6b35; margin-top: 1rem; }
-        .file-selector { text-align: center; margin: 1rem; }
-        input { background: #2a2a3a; color: #fff; border: 1px solid #ff6b35; padding: 8px; border-radius: 5px; }
     </style>
 </head>
 <body>
     <div class="game-page">
         <div class="game-header">
             <a href="index.html" class="back-button">← Voltar</a>
-            <h2 id="gameTitle">Carregando...</h2>
+            <div class="game-title" id="gameTitle">Carregando...</div>
             <div style="width: 80px;"></div>
         </div>
         
         <div id="gameArea" class="game-area">
-            <!-- Aqui vai aparecer o iframe OU o canvas do emulador -->
-            <div id="loadingMsg">Carregando...</div>
+            <div class="loading">⏳ Carregando jogo...</div>
         </div>
         
-        <div id="controls" class="file-selector" style="display: none;">
-            <input type="file" id="romFile" accept=".smc,.sfc,.nes" />
-            <p style="color:#aaa; margin-top:10px;">Selecione sua ROM .smc ou .sfc</p>
-        </div>
-        
-        <div class="info" id="infoMsg">
-            🎮 Clique dentro do jogo para ativar os controles
+        <div id="controlsArea" class="info-area">
+            <div id="infoMsg" class="info-message">🎮 Clique dentro do jogo para ativar os controles</div>
         </div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/jsnes@1.1.0/dist/jsnes.min.js"></script>
     <script>
+        // ============================================
+        // PEGAR OS DADOS DO JOGO SALVO
+        // ============================================
         const savedGame = localStorage.getItem('currentGame');
         const gameTitle = document.getElementById('gameTitle');
         const gameArea = document.getElementById('gameArea');
         const infoMsg = document.getElementById('infoMsg');
-        const controlsDiv = document.getElementById('controls');
         
         if (!savedGame) {
+            // Nenhum jogo selecionado
             gameTitle.textContent = 'Nenhum jogo selecionado';
-            gameArea.innerHTML = '<div style="color:#ff4444;">Erro: Nenhum jogo selecionado</div>';
+            gameArea.innerHTML = '<div class="error">❌ Nenhum jogo foi selecionado. Volte para a página inicial.</div>';
         } else {
             const game = JSON.parse(savedGame);
             gameTitle.textContent = game.title;
             
+            // ============================================
+            // FORMATO IFRAME (ClassicJoy)
+            // ============================================
             if (game.type === 'iframe') {
-                // Formato ClassicJoy
-                gameArea.innerHTML = `<iframe src="${game.url}" allowfullscreen></iframe>`;
-                infoMsg.innerHTML = '🎮 Clique dentro do jogo | Setas = mover | Z/X = ações';
-            } 
+                gameArea.innerHTML = `
+                    <iframe 
+                        src="${game.url}" 
+                        allowfullscreen
+                        frameborder="0">
+                    </iframe>
+                `;
+                infoMsg.innerHTML = '🎮 Clique dentro do jogo | Setas = mover | Z/X = ações | Enter = Start';
+            }
+            
+            // ============================================
+            // FORMATO LOCAL (ROM .nes, .smc, .sfc)
+            // ============================================
             else if (game.type === 'local') {
-                // Formato ROM local
                 gameArea.innerHTML = `<canvas id="canvas" width="800" height="600"></canvas>`;
-                controlsDiv.style.display = 'block';
-                infoMsg.innerHTML = '🎮 1. Selecione sua ROM | 2. Clique na tela | 3. Use setas, Z e X';
-                setupLocalEmulator(game.romPath);
+                
+                // Adicionar seletor de arquivo
+                const controlsArea = document.getElementById('controlsArea');
+                controlsArea.innerHTML = `
+                    <div class="file-selector">
+                        <input type="file" id="romFile" accept=".nes,.smc,.sfc" />
+                        <div style="margin-top: 10px; color: #aaa; font-size: 12px;">
+                            📁 Selecione sua ROM (formato .nes, .smc ou .sfc)
+                        </div>
+                    </div>
+                    <div id="infoMsg" class="info-message">🎮 1. Selecione a ROM | 2. Clique na tela | 3. Use os controles</div>
+                `;
+                
+                setupLocalEmulator();
             }
         }
         
-        function setupLocalEmulator(romPath) {
+        // ============================================
+        // EMULADOR LOCAL (NES/SNES)
+        // ============================================
+        function setupLocalEmulator() {
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
             const fileInput = document.getElementById('romFile');
+            const infoMsg = document.getElementById('infoMsg');
+            
             let nes = null;
             let frameId = null;
             
-            // Tela inicial
-            ctx.fillStyle = '#000';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#ff6b35';
-            ctx.font = '20px monospace';
-            ctx.textAlign = 'center';
-            ctx.fillText('Selecione sua ROM', canvas.width/2, canvas.height/2);
+            // Desenhar tela inicial
+            drawInitialScreen();
+            
+            function drawInitialScreen() {
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#ff6b35';
+                ctx.font = '20px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('SELECIONE UMA ROM', canvas.width/2, canvas.height/2 - 20);
+                ctx.font = '14px monospace';
+                ctx.fillStyle = '#aaa';
+                ctx.fillText('Arquivos .nes, .smc ou .sfc', canvas.width/2, canvas.height/2 + 20);
+            }
             
             fileInput.addEventListener('change', async (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
                 
+                infoMsg.innerHTML = `📂 Carregando ${file.name}... Aguarde`;
+                infoMsg.style.color = '#ffaa44';
+                
                 try {
                     const buffer = await file.arrayBuffer();
                     const bytes = new Uint8Array(buffer);
+                    
+                    // Verificar cabeçalho da ROM
+                    const isValidNES = bytes[0] === 0x4E && bytes[1] === 0x45 && bytes[2] === 0x53 && bytes[3] === 0x1A;
+                    
+                    if (!isValidNES && file.name.includes('.nes')) {
+                        throw new Error('ROM NES inválida (cabeçalho não encontrado)');
+                    }
                     
                     // Converter para string (formato JSNES)
                     let romString = '';
@@ -124,17 +242,25 @@
                         romString += String.fromCharCode(bytes[i]);
                     }
                     
+                    const sizeKB = (bytes.length / 1024).toFixed(1);
+                    infoMsg.innerHTML = `✅ ROM carregada! ${sizeKB} KB - Iniciando emulador...`;
+                    infoMsg.style.color = '#44ff44';
+                    
                     startEmulator(romString);
                     
                 } catch (err) {
                     infoMsg.innerHTML = `❌ Erro: ${err.message}`;
+                    infoMsg.style.color = '#ff4444';
+                    drawInitialScreen();
                 }
             });
             
             function startEmulator(romData) {
+                // Parar emulador anterior
                 if (frameId) cancelAnimationFrame(frameId);
                 if (nes) nes = null;
                 
+                // Criar novo emulador
                 nes = new jsnes.NES({
                     onFrame: function(frameBuffer) {
                         if (!frameBuffer) return;
@@ -148,12 +274,18 @@
                         }
                         ctx.putImageData(imageData, 0, 0);
                     },
-                    onAudioSample: function(l, r) {}
+                    onAudioSample: function(left, right) {
+                        // Áudio (opcional)
+                    }
                 });
                 
+                // Carregar ROM
                 nes.loadROM(romData);
+                
+                // Configurar controles
                 setupControls();
                 
+                // Iniciar loop do emulador
                 function frame() {
                     if (nes) {
                         nes.frame();
@@ -162,11 +294,18 @@
                 }
                 frame();
                 
-                infoMsg.innerHTML = '🎮 Jogo rodando! Use setas, Z e X | Clique na tela para ativar';
+                infoMsg.innerHTML = '🎮 Jogo rodando! Clique na tela e aperte ENTER para iniciar';
+                infoMsg.style.color = '#44ff44';
+                
+                // Evento de clique para ativar controles
+                canvas.addEventListener('click', () => {
+                    canvas.focus();
+                    infoMsg.innerHTML = '🎮 Controles ativos! Use setas, Z e X | Enter = Start';
+                });
             }
             
             function setupControls() {
-                const keys = {
+                const keyMap = {
                     'ArrowUp': jsnes.Controller.BUTTON_UP,
                     'ArrowDown': jsnes.Controller.BUTTON_DOWN,
                     'ArrowLeft': jsnes.Controller.BUTTON_LEFT,
@@ -177,28 +316,25 @@
                 };
                 
                 const onKeyDown = (e) => {
-                    const btn = keys[e.key];
-                    if (btn && nes) {
+                    const btn = keyMap[e.key];
+                    if (btn !== undefined && nes) {
                         nes.buttonDown(1, btn);
                         e.preventDefault();
                     }
                 };
                 
                 const onKeyUp = (e) => {
-                    const btn = keys[e.key];
-                    if (btn && nes) {
+                    const btn = keyMap[e.key];
+                    if (btn !== undefined && nes) {
                         nes.buttonUp(1, btn);
                         e.preventDefault();
                     }
                 };
                 
+                document.removeEventListener('keydown', onKeyDown);
+                document.removeEventListener('keyup', onKeyUp);
                 document.addEventListener('keydown', onKeyDown);
                 document.addEventListener('keyup', onKeyUp);
-                
-                canvas.addEventListener('click', () => {
-                    canvas.focus();
-                    infoMsg.innerHTML = '🎮 Controles ativos! Use setas, Z e X';
-                });
             }
         }
     </script>

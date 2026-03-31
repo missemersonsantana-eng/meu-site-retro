@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RetroArcade - Jogos Clássicos</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <header>
@@ -12,14 +12,16 @@
             <div class="logo">
                 <h1>🎮 RETROARCADE</h1>
             </div>
+
             <ul class="nav-links">
                 <li><a href="index.html">HOME</a></li>
-                <li><a href="#">GAMES</a></li>
+                <li><a href="#games">GAMES</a></li>
                 <li><a href="#">CONSOLES</a></li>
             </ul>
+
             <div class="search">
-                <input type="text" id="searchInput" placeholder="Buscar jogo...">
-                <button>🔍</button>
+                <input type="text" id="searchInput" placeholder="Buscar jogo..." />
+                <button type="button">🔍</button>
             </div>
         </nav>
     </header>
@@ -32,10 +34,10 @@
             <button class="btn-primary" onclick="scrollToGames()">EXPLORAR JOGOS</button>
         </section>
 
-        <section class="games-section">
+        <section class="games-section" id="games">
             <h2>ÚLTIMOS JOGOS ADICIONADOS</h2>
             <div class="games-grid" id="gamesGrid">
-                <!-- Os cards vão aparecer aqui via JavaScript -->
+                <!-- Cards renderizados via JavaScript -->
             </div>
         </section>
     </main>

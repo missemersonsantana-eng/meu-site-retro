@@ -58,7 +58,7 @@ const games = [
         tags: ["RPG", "GAMEBOY", "NINTENDO"]
     },
 
-    // Exemplo de ROM do projeto (SNES)
+    // ROM local de exemplo (SNES)
     {
         id: 6,
         title: "Meu Jogo SNES",
@@ -72,7 +72,7 @@ const games = [
         tags: ["SNES", "CUSTOM", "LOCAL"]
     },
 
-    // Exemplo: abrir seletor manual
+    // Abrir seletor manual de ROM
     {
         id: 7,
         title: "Carregar Minha Própria ROM",
@@ -140,17 +140,21 @@ function playGame(gameId) {
         type: game.type
     };
 
+    // Jogos via iframe
     if (game.type === "iframe") {
         gameData.url = BASE_URL + game.slug;
     }
 
+    // Jogos via ROM / EmulatorJS
     if (game.type === "rom") {
         gameData.system = game.system || "auto";
         gameData.romPath = game.romPath || null;
         gameData.allowFileSelect = !!game.allowFileSelect;
     }
 
-    localStorage.setItem("currentGame", JSON.stringify(gameData));
+    // IMPORTANTE: tem que bater com o game.html
+    localStorage.setItem("selectedGame", JSON.stringify(gameData));
+
     window.location.href = "game.html";
 }
 

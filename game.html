@@ -1,371 +1,317 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jogando - RetroArcade</title>
-    <link rel="stylesheet" href="style.css" />
-    <style>
-        .game-page {
-            padding-top: 90px;
-            min-height: 100vh;
-            background: #0a0a1a;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jogar - RetroGames Hub</title>
 
-        .game-header {
-            background: #1e1e2e;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #ff6b35;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .back-button {
-            background: #ff6b35;
-            color: #fff;
-            text-decoration: none;
-            padding: 0.7rem 1rem;
-            border-radius: 8px;
-            transition: background 0.3s ease;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0a0a23, #11113a);
+      color: white;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-        .back-button:hover {
-            background: #ff8c5a;
-        }
+    .game-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-        .game-title {
-            color: #ff6b35;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-align: center;
-        }
+    .topbar {
+      margin-bottom: 20px;
+    }
 
-        .game-area {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            min-height: 70vh;
-            flex-direction: column;
-            gap: 1rem;
-        }
+    .topbar h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
 
-        iframe {
-            width: 100%;
-            max-width: 1100px;
-            height: 650px;
-            border: 2px solid #ff6b35;
-            border-radius: 12px;
-            background: #000;
-            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
-        }
+    .topbar p {
+      color: #bbbbff;
+      font-size: 1rem;
+    }
 
-        #emulatorContainer {
-            width: 100%;
-            max-width: 1100px;
-            min-height: 650px;
-            border: 2px solid #ff6b35;
-            border-radius: 12px;
-            background: #000;
-            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
-            overflow: hidden;
-        }
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
 
-        .info-area {
-            text-align: center;
-            padding: 1rem 2rem 2rem;
-        }
+    button,
+    .file-btn {
+      background: #ff5a2c;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      display: inline-block;
+      text-decoration: none;
+    }
 
-        .info-message {
-            color: #ff6b35;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
+    button:hover,
+    .file-btn:hover {
+      background: #ff784f;
+    }
 
-        .file-selector {
-            text-align: center;
-            margin: 1rem 0;
-            background: #1e1e2e;
-            border: 1px solid #333;
-            padding: 1rem;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 1100px;
-        }
+    .hidden-input {
+      display: none;
+    }
 
-        .file-selector input {
-            background: #2a2a3a;
-            color: #fff;
-            border: 1px solid #ff6b35;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            max-width: 420px;
-        }
+    .status-box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
 
-        .loading {
-            text-align: center;
-            color: #ffaa44;
-            font-size: 18px;
-            padding: 50px;
-        }
+    .player-area {
+      width: 100%;
+      min-height: 600px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
 
-        .error {
-            text-align: center;
-            color: #ff4444;
-            padding: 50px;
-            font-size: 16px;
-            max-width: 900px;
-        }
+    .player-area iframe {
+      width: 100%;
+      height: 80vh;
+      border: none;
+      border-radius: 12px;
+    }
 
-        .helper-text {
-            color: #aaa;
-            font-size: 12px;
-            margin-top: 10px;
-        }
+    #game {
+      width: 100%;
+      min-height: 580px;
+    }
 
-        @media (max-width: 900px) {
-            iframe,
-            #emulatorContainer {
-                min-height: 450px;
-                height: 450px;
-            }
+    .placeholder {
+      color: #bbbbff;
+      text-align: center;
+      font-size: 1rem;
+    }
 
-            .game-header {
-                justify-content: center;
-                text-align: center;
-            }
+    @media (max-width: 768px) {
+      .topbar h1 {
+        font-size: 1.5rem;
+      }
 
-            .game-title {
-                font-size: 1rem;
-            }
-        }
-    </style>
+      .player-area {
+        min-height: 420px;
+      }
+
+      #game {
+        min-height: 400px;
+      }
+
+      .player-area iframe {
+        height: 60vh;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="game-page">
-        <div class="game-header">
-            <a href="index.html" class="back-button">← Voltar</a>
-            <div class="game-title" id="gameTitle">Carregando...</div>
-            <div style="width: 80px;"></div>
+  <main class="game-container">
+    <header class="topbar">
+      <h1 id="game-title">Carregando jogo...</h1>
+      <p id="game-subtitle">Preparando ambiente...</p>
+    </header>
+
+    <section class="controls">
+      <button onclick="goBack()">⬅ Voltar</button>
+
+      <label for="rom-input" id="rom-label" class="file-btn" style="display: none;">
+        📂 Selecionar ROM
+      </label>
+
+      <input type="file" id="rom-input" class="hidden-input" accept=".nes,.smc,.sfc" />
+    </section>
+
+    <section id="status-box" class="status-box">
+      Aguarde...
+    </section>
+
+    <section id="player-area" class="player-area">
+      <div class="placeholder">Aguardando carregamento...</div>
+    </section>
+  </main>
+
+  <script>
+    const selectedGame = JSON.parse(localStorage.getItem("selectedGame"));
+    const playerArea = document.getElementById("player-area");
+    const romInput = document.getElementById("rom-input");
+    const romLabel = document.getElementById("rom-label");
+    const statusBox = document.getElementById("status-box");
+    const gameTitle = document.getElementById("game-title");
+    const gameSubtitle = document.getElementById("game-subtitle");
+
+    if (!selectedGame) {
+      gameTitle.textContent = "Nenhum jogo selecionado";
+      gameSubtitle.textContent = "Volte para a tela inicial.";
+      statusBox.innerHTML = "Nenhum jogo foi selecionado.";
+    } else {
+      gameTitle.textContent = selectedGame.title || "Jogo";
+
+      if (selectedGame.type === "iframe") {
+        loadIframeGame(selectedGame);
+      } else if (selectedGame.type === "rom" || selectedGame.type === "local") {
+        prepareRomMode(selectedGame);
+      } else {
+        gameSubtitle.textContent = "Erro";
+        statusBox.innerHTML = "Tipo de jogo inválido.";
+      }
+    }
+
+    function goBack() {
+      window.location.href = "index.html";
+    }
+
+    function loadIframeGame(game) {
+      gameSubtitle.textContent = "Modo jogo online (iframe)";
+      statusBox.innerHTML = "Carregando jogo externo...";
+
+      playerArea.innerHTML = `
+        <iframe
+          src="${game.url}"
+          allowfullscreen
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+          loading="lazy">
+        </iframe>
+      `;
+
+      setTimeout(() => {
+        statusBox.innerHTML = "Jogo carregado. Divirta-se!";
+      }, 1000);
+    }
+
+    function prepareRomMode(game) {
+      gameSubtitle.textContent = "Modo ROM local";
+      romLabel.style.display = "inline-block";
+
+      let systemText = "NES (.nes) ou SNES (.smc / .sfc)";
+
+      if (game.system === "nes") {
+        systemText = "NES (.nes)";
+      } else if (game.system === "snes") {
+        systemText = "SNES (.smc / .sfc)";
+      }
+
+      playerArea.innerHTML = `
+        <div class="placeholder">
+          Selecione uma ROM para iniciar o emulador.
         </div>
+      `;
 
-        <div id="gameArea" class="game-area">
-            <div class="loading">⏳ Carregando jogo...</div>
-        </div>
+      statusBox.innerHTML = `
+        <strong>Pronto para carregar sua ROM</strong><br>
+        Sistema esperado: <strong>${systemText}</strong><br>
+        Clique em <strong>Selecionar ROM</strong> para iniciar.
+      `;
 
-        <div id="controlsArea" class="info-area">
-            <div id="infoMsg" class="info-message">🎮 Preparando o jogo...</div>
-        </div>
-    </div>
+      romInput.value = "";
+      romInput.onchange = handleRomSelection;
+    }
 
-    <script>
-        // ============================================
-        // CONFIGURAÇÃO GERAL
-        // ============================================
-        const savedGame = localStorage.getItem("currentGame");
-        const gameTitle = document.getElementById("gameTitle");
-        const gameArea = document.getElementById("gameArea");
-        const controlsArea = document.getElementById("controlsArea");
-        const infoMsg = document.getElementById("infoMsg");
+    function handleRomSelection(event) {
+      const file = event.target.files[0];
 
-        if (!savedGame) {
-            gameTitle.textContent = "Nenhum jogo selecionado";
-            gameArea.innerHTML = `
-                <div class="error">
-                    ❌ Nenhum jogo foi selecionado.<br />
-                    Volte para a página inicial e escolha um jogo.
-                </div>
-            `;
-        } else {
-            const game = JSON.parse(savedGame);
-            gameTitle.textContent = game.title || "Jogo";
+      if (!file) {
+        statusBox.innerHTML = "Nenhuma ROM selecionada.";
+        return;
+      }
 
-            if (game.type === "iframe") {
-                loadIframeGame(game);
-            } else if (game.type === "rom") {
-                loadRomGame(game);
-            } else {
-                gameArea.innerHTML = `<div class="error">❌ Tipo de jogo inválido.</div>`;
-            }
-        }
+      const extension = file.name.split(".").pop().toLowerCase();
 
-        // ============================================
-        // MODO IFRAME
-        // ============================================
-        function loadIframeGame(game) {
-            if (!game.url) {
-                gameArea.innerHTML = `<div class="error">❌ URL do jogo não encontrada.</div>`;
-                return;
-            }
+      if (!["nes", "smc", "sfc"].includes(extension)) {
+        statusBox.innerHTML = "Formato inválido. Use .nes, .smc ou .sfc.";
+        romInput.value = "";
+        return;
+      }
 
-            gameArea.innerHTML = `
-                <iframe 
-                    src="${game.url}" 
-                    allowfullscreen
-                    frameborder="0">
-                </iframe>
-            `;
+      if (selectedGame.system === "nes" && extension !== "nes") {
+        statusBox.innerHTML = "Este jogo espera uma ROM NES (.nes).";
+        romInput.value = "";
+        return;
+      }
 
-            infoMsg.innerHTML = "🎮 Clique dentro do jogo | Setas = mover | Z/X = ações | Enter = Start";
-            infoMsg.style.color = "#44ff44";
-        }
+      if (selectedGame.system === "snes" && !["smc", "sfc"].includes(extension)) {
+        statusBox.innerHTML = "Este jogo espera uma ROM SNES (.smc ou .sfc).";
+        romInput.value = "";
+        return;
+      }
 
-        // ============================================
-        // MODO ROM (EMULATORJS)
-        // ============================================
-        function loadRomGame(game) {
-            gameArea.innerHTML = `
-                <div id="emulatorContainer"></div>
-            `;
+      startEmulator(file, extension);
+    }
 
-            let selectorHtml = "";
+    function startEmulator(file, extension) {
+      statusBox.innerHTML = `Carregando ROM: <strong>${file.name}</strong>...`;
 
-            if (game.allowFileSelect || !game.romPath) {
-                selectorHtml = `
-                    <div class="file-selector">
-                        <input type="file" id="romFile" accept=".nes,.smc,.sfc" />
-                        <div class="helper-text">
-                            📁 Selecione uma ROM no formato .nes, .smc ou .sfc
-                        </div>
-                    </div>
-                `;
-            }
+      playerArea.innerHTML = `<div id="game"></div>`;
 
-            controlsArea.innerHTML = `
-                ${selectorHtml}
-                <div id="infoMsg" class="info-message">
-                    🎮 Preparando ambiente do emulador...
-                </div>
-            `;
+      // Limpa configs anteriores
+      delete window.EJS_player;
+      delete window.EJS_gameName;
+      delete window.EJS_biosUrl;
+      delete window.EJS_pathtodata;
+      delete window.EJS_gameUrl;
+      delete window.EJS_core;
 
-            const newInfoMsg = document.getElementById("infoMsg");
+      // Configuração do EmulatorJS
+      window.EJS_player = "#game";
+      window.EJS_gameName = file.name;
+      window.EJS_biosUrl = "";
+      window.EJS_pathtodata = "emulatorjs/data/";
+      window.EJS_gameUrl = URL.createObjectURL(file);
+      window.EJS_core = extension === "nes" ? "nes" : "snes";
 
-            // Caso tenha ROM do projeto, carrega direto
-            if (game.romPath) {
-                newInfoMsg.innerHTML = "⏳ Carregando ROM do projeto...";
-                startEmulatorFromUrl(game.romPath, game.system || "auto", game.title, newInfoMsg);
-            } else {
-                newInfoMsg.innerHTML = "📁 Selecione uma ROM para iniciar.";
-            }
+      // Remove loader antigo
+      const oldScript = document.getElementById("emulatorjs-loader");
+      if (oldScript) {
+        oldScript.remove();
+      }
 
-            // Caso permita selecionar arquivo manualmente
-            const romFileInput = document.getElementById("romFile");
-            if (romFileInput) {
-                romFileInput.addEventListener("change", async (e) => {
-                    const file = e.target.files[0];
-                    if (!file) return;
+      // Carrega loader local
+      const script = document.createElement("script");
+      script.src = "./emulatorjs/data/loader.js";
+      script.id = "emulatorjs-loader";
+      script.async = true;
 
-                    try {
-                        newInfoMsg.innerHTML = `⏳ Lendo arquivo: ${file.name}...`;
-                        const extension = getFileExtension(file.name);
-                        const system = detectSystemByExtension(extension);
+      script.onload = () => {
+        statusBox.innerHTML = `
+          <strong>ROM carregada com sucesso!</strong><br>
+          Core detectado: <strong>${window.EJS_core.toUpperCase()}</strong><br>
+          Aguarde alguns segundos se a tela demorar para abrir.
+        `;
+      };
 
-                        if (!system) {
-                            throw new Error("Formato não suportado. Use .nes, .smc ou .sfc");
-                        }
+      script.onerror = () => {
+        statusBox.innerHTML = `
+          <strong>Erro ao carregar o EmulatorJS local.</strong><br>
+          Verifique se a pasta <strong>emulatorjs/data</strong> existe e contém o arquivo <strong>loader.js</strong>.
+        `;
+      };
 
-                        const arrayBuffer = await file.arrayBuffer();
-                        const blob = new Blob([arrayBuffer], { type: "application/octet-stream" });
-                        const romBlobUrl = URL.createObjectURL(blob);
-
-                        startEmulatorFromUrl(romBlobUrl, system, file.name, newInfoMsg);
-                    } catch (error) {
-                        console.error(error);
-                        newInfoMsg.innerHTML = `❌ ${error.message}`;
-                        newInfoMsg.style.color = "#ff4444";
-                    }
-                });
-            }
-        }
-
-        // ============================================
-        // INICIAR EMULATORJS
-        // ============================================
-        function startEmulatorFromUrl(romUrl, system, title, statusElement) {
-            const container = document.getElementById("emulatorContainer");
-            if (!container) return;
-
-            container.innerHTML = "";
-
-            const finalSystem = system === "auto" ? detectSystemByExtension(getFileExtension(romUrl)) : system;
-
-            if (!finalSystem) {
-                statusElement.innerHTML = "❌ Não foi possível identificar o sistema da ROM.";
-                statusElement.style.color = "#ff4444";
-                return;
-            }
-
-            statusElement.innerHTML = `🚀 Iniciando ${finalSystem.toUpperCase()}...`;
-            statusElement.style.color = "#ffaa44";
-
-            // Limpar config anterior, se existir
-            delete window.EJS_player;
-            delete window.EJS_gameUrl;
-            delete window.EJS_core;
-            delete window.EJS_pathtodata;
-
-            // Criar div interna do player
-            const playerDiv = document.createElement("div");
-            playerDiv.id = "game";
-            playerDiv.style.width = "100%";
-            playerDiv.style.height = "650px";
-            container.appendChild(playerDiv);
-
-            // Configuração do EmulatorJS
-            window.EJS_player = "#game";
-            window.EJS_gameUrl = romUrl;
-            window.EJS_core = mapSystemToCore(finalSystem);
-            window.EJS_pathtodata = "emulatorjs/data/";
-
-            // Remover script anterior se existir
-            const oldLoader = document.getElementById("ejs-loader");
-            if (oldLoader) oldLoader.remove();
-
-            const script = document.createElement("script");
-            script.src = "emulatorjs/loader.js";
-            script.id = "ejs-loader";
-
-            script.onload = () => {
-                statusElement.innerHTML = `🎮 ${title} carregado! Clique na tela do jogo para ativar os controles.`;
-                statusElement.style.color = "#44ff44";
-            };
-
-            script.onerror = () => {
-                statusElement.innerHTML = "❌ Não foi possível carregar o EmulatorJS. Verifique a pasta emulatorjs/";
-                statusElement.style.color = "#ff4444";
-            };
-
-            document.body.appendChild(script);
-        }
-
-        // ============================================
-        // HELPERS
-        // ============================================
-        function getFileExtension(filenameOrUrl) {
-            const clean = filenameOrUrl.split("?")[0].toLowerCase();
-            const parts = clean.split(".");
-            return parts.length > 1 ? parts.pop() : "";
-        }
-
-        function detectSystemByExtension(ext) {
-            if (ext === "nes") return "nes";
-            if (ext === "smc" || ext === "sfc") return "snes";
-            return null;
-        }
-
-        function mapSystemToCore(system) {
-            const cores = {
-                nes: "nes",
-                snes: "snes"
-            };
-
-            return cores[system] || "snes";
-        }
-    </script>
+      document.body.appendChild(script);
+    }
+  </script>
 </body>
 </html>

@@ -1,51 +1,80 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RetroArcade - Jogos Clássicos</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RetroGames Hub</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                <h1>🎮 RETROARCADE</h1>
-            </div>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-grid"></div>
 
-            <ul class="nav-links">
-                <li><a href="index.html">HOME</a></li>
-                <li><a href="#games">GAMES</a></li>
-                <li><a href="#">CONSOLES</a></li>
-            </ul>
+  <header class="hero">
+    <div class="hero-content">
+      <span class="hero-badge">🎮 Arcade • Retro • EmulatorJS</span>
+      <h1>RetroGames Hub</h1>
+      <p>
+        Sua central retrô com jogos via <strong>iframe</strong>,
+        ROMs <strong>NES</strong> e <strong>SNES</strong>.
+      </p>
 
-            <div class="search">
-                <input type="text" id="searchInput" placeholder="Buscar jogo..." />
-                <button type="button">🔍</button>
-            </div>
-        </nav>
-    </header>
+      <div class="hero-actions">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Buscar por nome, categoria, descrição ou tag..."
+          class="search-input"
+        />
+        <button
+          class="clear-btn"
+          id="clearSearchBtn"
+          type="button"
+        >
+          Limpar
+        </button>
+      </div>
+    </div>
+  </header>
 
-    <main>
-        <section class="hero">
-            <h2>RETRO GAMES</h2>
-            <h1>Coleção de Jogos Clássicos</h1>
-            <p>Reviva os clássicos, jogue diretamente no navegador</p>
-            <button class="btn-primary" onclick="scrollToGames()">EXPLORAR JOGOS</button>
-        </section>
+  <main class="main-content">
+    <section class="section-header">
+      <div>
+        <h2>Biblioteca de Jogos</h2>
+        <p>Seus jogos são carregados dinamicamente pelo <code>script.js</code>.</p>
+      </div>
+      <div class="library-stats">
+        <span id="gameCount">0 jogos</span>
+      </div>
+    </section>
 
-        <section class="games-section" id="games">
-            <h2>ÚLTIMOS JOGOS ADICIONADOS</h2>
-            <div class="games-grid" id="gamesGrid">
-                <!-- Cards renderizados via JavaScript -->
-            </div>
-        </section>
-    </main>
+    <section class="games-section">
+      <div id="gamesGrid" class="games-grid"></div>
+    </section>
+  </main>
 
-    <footer>
-        <p>© 2026 RetroArcade - Revivendo a nostalgia dos games</p>
-    </footer>
+  <footer class="site-footer">
+    <p>RetroGames Hub • V4.5 MASTER DEFINITIVA • Compatível com seu script.js real</p>
+  </footer>
 
-    <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const clearBtn = document.getElementById("clearSearchBtn");
+      const searchInput = document.getElementById("searchInput");
+
+      if (clearBtn && searchInput) {
+        clearBtn.addEventListener("click", () => {
+          searchInput.value = "";
+          if (typeof renderGames === "function") {
+            renderGames();
+          }
+          searchInput.focus();
+        });
+      }
+    });
+  </script>
+
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,6 +1,3 @@
-// ============================================
-// BANCO DE DADOS DOS JOGOS
-// ============================================
 const games = [
     {
         id: 1,
@@ -57,8 +54,6 @@ const games = [
         slug: "pokemon-blue-version",
         tags: ["RPG", "GAMEBOY", "NINTENDO"]
     },
-
-    // ROM local de exemplo (SNES)
     {
         id: 6,
         title: "Meu Jogo SNES",
@@ -71,8 +66,6 @@ const games = [
         romPath: "games/meu-jogo/rom.smc",
         tags: ["SNES", "CUSTOM", "LOCAL"]
     },
-
-    // Abrir seletor manual de ROM
     {
         id: 7,
         title: "Carregar Minha Própria ROM",
@@ -92,11 +85,33 @@ const games = [
 const BASE_URL = "https://classicjoy.games/embed?slug=";
 
 // ============================================
+// NORMALIZAR TEXTO
+// ============================================
+function normalizeText(text) {
+    return String(text || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+}
+
+// ============================================
+// ATUALIZAR CONTADOR
+// ============================================
+function updateGameCount(count) {
+    const gameCount = document.getElementById("gameCount");
+    if (gameCount) {
+        gameCount.textContent = `${count} jogo${count !== 1 ? "s" : ""}`;
+    }
+}
+
+// ============================================
 // RENDERIZAR OS CARDS
 // ============================================
 function renderGames(list = games) {
     const gamesGrid = document.getElementById("gamesGrid");
     if (!gamesGrid) return;
+
+    updateGameCount(list.length);
 
     if (!list.length) {
         gamesGrid.innerHTML = `
@@ -108,23 +123,23 @@ function renderGames(list = games) {
     }
 
     gamesGrid.innerHTML = list.map(game => `
-        <div class="game-card" onclick="playGame(${game.id})">
-            <img 
-                class="game-image" 
-                src="${game.image}" 
-                alt="${game.title}"
-                onerror="this.src='https://via.placeholder.com/280x180?text=${encodeURIComponent(game.title)}'"
-            />
-            <div class="game-info">
-                <div class="game-title">${game.title} (${game.year})</div>
-                <div class="game-category">${game.category}</div>
-                <div class="game-description">${game.description}</div>
-                <div class="game-tags">
-                    ${game.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
-                </div>
+    <div class="game-card" onclick="playGame(${game.id})">
+        <img 
+            class="game-image" 
+            src="${game.image}" 
+            alt="${game.title}"
+            onerror="this.onerror=null; this.src='assets/images/fallback.jpg';"
+        />
+        <div class="game-info">
+            <div class="game-title">${game.title} (${game.year})</div>
+            <div class="game-category">${game.category}</div>
+            <div class="game-description">${game.description}</div>
+            <div class="game-tags">
+                ${game.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
             </div>
         </div>
-    `).join("");
+    </div>
+`).join("");
 }
 
 // ============================================
@@ -137,24 +152,28 @@ function playGame(gameId) {
     const gameData = {
         id: game.id,
         title: game.title,
-        type: game.type
+        year: game.year,
+        category: game.category,
+        description: game.description,
+        image: game.image,
+        type: game.type,
+        tags: game.tags || []
     };
 
-    // Jogos via iframe
+    // JOGO VIA IFRAME
     if (game.type === "iframe") {
+        gameData.slug = game.slug;
         gameData.url = BASE_URL + game.slug;
     }
 
-    // Jogos via ROM / EmulatorJS
-    if (game.type === "rom") {
+    // JOGO VIA ROM (AUTOMÁTICA OU MANUAL)
+    if (game.type === "rom" || game.type === "local") {
         gameData.system = game.system || "auto";
         gameData.romPath = game.romPath || null;
         gameData.allowFileSelect = !!game.allowFileSelect;
     }
 
-    // IMPORTANTE: tem que bater com o game.html
-    localStorage.setItem("selectedGame", JSON.stringify(gameData));
-
+    localStorage.setItem("currentGame", JSON.stringify(gameData));
     window.location.href = "game.html";
 }
 
@@ -175,13 +194,18 @@ function setupSearch() {
     if (!searchInput) return;
 
     searchInput.addEventListener("input", (e) => {
-        const term = e.target.value.toLowerCase().trim();
+        const term = normalizeText(e.target.value.trim());
+
+        if (!term) {
+            renderGames();
+            return;
+        }
 
         const filtered = games.filter(game =>
-            game.title.toLowerCase().includes(term) ||
-            game.category.toLowerCase().includes(term) ||
-            game.description.toLowerCase().includes(term) ||
-            game.tags.some(tag => tag.toLowerCase().includes(term))
+            normalizeText(game.title).includes(term) ||
+            normalizeText(game.category).includes(term) ||
+            normalizeText(game.description).includes(term) ||
+            (game.tags || []).some(tag => normalizeText(tag).includes(term))
         );
 
         renderGames(filtered);

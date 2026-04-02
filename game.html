@@ -5,18 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RetroGames Hub - Jogar</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #07070d;
+      --panel: rgba(255,255,255,0.06);
+      --panel-strong: rgba(255,255,255,0.08);
+      --line: rgba(255,255,255,0.1);
+      --text: #f5f7ff;
+      --muted: #b8bfd3;
+      --purple: #8b5cf6;
+      --purple-2: #6d28d9;
+      --green: #22c55e;
+      --green-2: #16a34a;
+      --red-bg: rgba(255, 0, 80, 0.12);
+      --red-line: rgba(255, 0, 80, 0.3);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      font-family: Arial, sans-serif;
-      background: radial-gradient(circle at top, #1b1033, #09060f 70%);
-      color: #fff;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(139, 92, 246, 0.14), transparent 30%),
+        radial-gradient(circle at 80% 20%, rgba(34, 211, 238, 0.08), transparent 28%),
+        radial-gradient(circle at 50% 80%, rgba(236, 72, 153, 0.08), transparent 25%),
+        var(--bg);
+      color: var(--text);
       min-height: 100vh;
       padding: 20px;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1250px;
       margin: 0 auto;
     }
 
@@ -30,17 +54,18 @@
     }
 
     .back-btn {
-      background: #7c3aed;
+      background: linear-gradient(135deg, var(--purple), var(--purple-2));
       color: white;
       text-decoration: none;
       padding: 10px 16px;
-      border-radius: 10px;
+      border-radius: 12px;
       font-weight: bold;
       transition: 0.2s;
+      box-shadow: 0 10px 24px rgba(109, 40, 217, 0.28);
     }
 
     .back-btn:hover {
-      background: #6d28d9;
+      transform: translateY(-2px);
     }
 
     .title-box h1 {
@@ -49,59 +74,62 @@
     }
 
     .title-box p {
-      color: #cfc9dd;
+      color: var(--muted);
       font-size: 0.95rem;
     }
 
     .player-shell {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
+      background: linear-gradient(180deg, var(--panel-strong), var(--panel));
+      border: 1px solid var(--line);
+      border-radius: 24px;
       padding: 18px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
     }
 
     #gameContainer {
       width: 100%;
-      min-height: 680px;
-      border-radius: 14px;
+      min-height: 700px;
+      border-radius: 18px;
       overflow: hidden;
       background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
+      border: 1px solid rgba(255,255,255,0.05);
     }
 
     iframe {
       width: 100%;
-      height: 680px;
+      height: 700px;
       border: none;
-      border-radius: 14px;
+      border-radius: 18px;
       background: #000;
     }
 
     #game {
       width: 100%;
-      height: 680px;
+      height: 700px;
     }
 
     .status-box {
       margin-top: 16px;
       padding: 14px;
-      border-radius: 12px;
+      border-radius: 14px;
       background: rgba(255,255,255,0.05);
       font-size: 0.95rem;
       color: #ddd;
-      line-height: 1.5;
+      line-height: 1.6;
+      border: 1px solid rgba(255,255,255,0.06);
     }
 
     .error-box {
       margin-top: 16px;
       padding: 14px;
-      border-radius: 12px;
-      background: rgba(255, 0, 80, 0.12);
-      border: 1px solid rgba(255, 0, 80, 0.3);
+      border-radius: 14px;
+      background: var(--red-bg);
+      border: 1px solid var(--red-line);
       color: #ffd7e3;
       display: none;
       white-space: pre-wrap;
@@ -117,7 +145,7 @@
     .file-picker {
       margin-top: 16px;
       padding: 16px;
-      border-radius: 12px;
+      border-radius: 14px;
       background: rgba(255,255,255,0.05);
       border: 1px dashed rgba(255,255,255,0.15);
     }
@@ -130,17 +158,17 @@
 
     .launch-btn {
       margin-top: 12px;
-      background: #22c55e;
+      background: linear-gradient(135deg, var(--green), var(--green-2));
       color: #08120d;
       border: none;
       padding: 10px 16px;
-      border-radius: 10px;
+      border-radius: 12px;
       font-weight: bold;
       cursor: pointer;
     }
 
     .launch-btn:hover {
-      background: #16a34a;
+      filter: brightness(1.05);
     }
 
     code {
@@ -151,8 +179,8 @@
 
     @media (max-width: 768px) {
       #gameContainer, iframe, #game {
-        min-height: 420px;
-        height: 420px;
+        min-height: 430px;
+        height: 430px;
       }
 
       .title-box h1 {
@@ -173,7 +201,7 @@
 
     <div class="player-shell">
       <div id="gameContainer">
-        <div class="loading" id="loadingMsg">🎮 Carregando jogo...</div>
+        <div class="loading">🎮 Carregando jogo...</div>
       </div>
 
       <div class="status-box" id="statusBox">
@@ -214,8 +242,23 @@
       return null;
     }
 
+    function resetEJSGlobals() {
+      window.EJS_player = undefined;
+      window.EJS_core = undefined;
+      window.EJS_gameUrl = undefined;
+      window.EJS_pathtodata = undefined;
+      window.EJS_startOnLoaded = undefined;
+      window.EJS_gameID = undefined;
+    }
+
     function loadEmulator(gameUrl, core, gameId) {
-      setStatus(`🚀 Iniciando EmulatorJS...<br>Core: <code>${core}</code><br>Origem: <code>${gameUrl}</code>`);
+      resetEJSGlobals();
+
+      setStatus(
+        `🚀 Iniciando EmulatorJS...<br>` +
+        `Core: <code>${core}</code><br>` +
+        `Origem: <code>${String(gameUrl).substring(0, 140)}</code>`
+      );
 
       gameContainer.innerHTML = `<div id="game"></div>`;
 

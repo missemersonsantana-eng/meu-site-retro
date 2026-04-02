@@ -1,133 +1,132 @@
-/* =========================
-   RESET / BASE
-========================= */
+:root {
+  --bg: #07070d;
+  --bg-soft: #10111d;
+  --card: rgba(255, 255, 255, 0.06);
+  --card-strong: rgba(255, 255, 255, 0.09);
+  --line: rgba(255, 255, 255, 0.1);
+  --text: #f5f7ff;
+  --muted: #b8bfd3;
+  --purple: #8b5cf6;
+  --purple-2: #6d28d9;
+  --cyan: #22d3ee;
+  --green: #22c55e;
+  --pink: #ec4899;
+  --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  --radius: 22px;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root {
-  --bg: #0b1020;
-  --bg-2: #121a30;
-  --card: rgba(20, 28, 48, 0.78);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --text: #f3f7ff;
-  --muted: #a9b6d3;
-  --primary: #7c5cff;
-  --primary-2: #4cc9f0;
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-  --radius-xl: 24px;
-  --radius-lg: 18px;
-  --radius-md: 14px;
-  --container: 1280px;
+html, body {
+  min-height: 100%;
 }
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(124, 92, 255, 0.18), transparent 30%),
-    radial-gradient(circle at bottom right, rgba(76, 201, 240, 0.12), transparent 28%),
-    linear-gradient(135deg, var(--bg), #0f1730 45%, #0a0f1f 100%);
+    radial-gradient(circle at 20% 10%, rgba(139, 92, 246, 0.14), transparent 30%),
+    radial-gradient(circle at 80% 20%, rgba(34, 211, 238, 0.08), transparent 28%),
+    radial-gradient(circle at 50% 80%, rgba(236, 72, 153, 0.08), transparent 25%),
+    var(--bg);
   color: var(--text);
-  min-height: 100vh;
-  position: relative;
   overflow-x: hidden;
-}
-
-/* =========================
-   BACKGROUND FX
-========================= */
-.bg-orb {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.25;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.orb-1 {
-  width: 260px;
-  height: 260px;
-  top: 80px;
-  left: -60px;
-  background: var(--primary);
-}
-
-.orb-2 {
-  width: 300px;
-  height: 300px;
-  right: -80px;
-  bottom: 120px;
-  background: var(--primary-2);
+  position: relative;
 }
 
 .bg-grid {
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 30px 30px;
-  z-index: 0;
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
   pointer-events: none;
+  z-index: 0;
 }
 
-/* =========================
-   LAYOUT
-========================= */
+.bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb-1 {
+  width: 280px;
+  height: 280px;
+  background: var(--purple);
+  top: 40px;
+  left: -80px;
+}
+
+.orb-2 {
+  width: 320px;
+  height: 320px;
+  background: var(--cyan);
+  bottom: 40px;
+  right: -100px;
+}
+
 .hero,
 .main-content,
-.site-footer,
-.game-page {
+.site-footer {
   position: relative;
   z-index: 1;
 }
 
 .hero {
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: 40px 20px 24px;
+  padding: 48px 20px 24px;
 }
 
 .hero-content {
-  background: rgba(16, 24, 44, 0.75);
-  border: 1px solid rgba(255,255,255,0.08);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+  backdrop-filter: blur(12px);
   border-radius: 28px;
-  padding: 32px;
   box-shadow: var(--shadow);
 }
 
 .hero-badge {
   display: inline-block;
-  font-size: 0.9rem;
-  color: #dbe5ff;
-  background: rgba(124, 92, 255, 0.18);
-  border: 1px solid rgba(124, 92, 255, 0.35);
+  margin-bottom: 14px;
   padding: 8px 14px;
   border-radius: 999px;
-  margin-bottom: 18px;
+  background: rgba(139, 92, 246, 0.16);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: #ddd6fe;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
 }
 
 .hero h1 {
-  font-size: clamp(2rem, 4vw, 3.6rem);
+  font-size: clamp(2rem, 4vw, 4rem);
   line-height: 1.05;
   margin-bottom: 12px;
-  letter-spacing: -0.02em;
 }
 
 .hero p {
   color: var(--muted);
-  font-size: 1.05rem;
-  max-width: 720px;
+  font-size: 1rem;
+  max-width: 760px;
   line-height: 1.6;
 }
 
+.hero strong {
+  color: #ffffff;
+}
+
 .hero-actions {
-  margin-top: 22px;
+  margin-top: 24px;
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
@@ -135,50 +134,44 @@ body {
 
 .search-input {
   flex: 1;
-  min-width: 240px;
+  min-width: 260px;
   padding: 14px 16px;
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(8, 14, 28, 0.7);
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.06);
   color: var(--text);
   outline: none;
-  font-size: 1rem;
-  transition: 0.25s ease;
+  font-size: 0.95rem;
+  transition: 0.2s ease;
 }
 
 .search-input::placeholder {
-  color: #8ea0c5;
+  color: #9ca3af;
 }
 
 .search-input:focus {
-  border-color: rgba(124, 92, 255, 0.55);
-  box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.12);
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.12);
 }
 
-.clear-btn,
-.back-btn {
-  border: none;
-  cursor: pointer;
+.clear-btn {
   padding: 14px 18px;
+  border: none;
   border-radius: 14px;
-  background: linear-gradient(135deg, var(--primary), #5f45db);
+  background: linear-gradient(135deg, var(--purple), var(--purple-2));
   color: white;
   font-weight: 700;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  cursor: pointer;
+  transition: 0.25s ease;
 }
 
-.clear-btn:hover,
-.back-btn:hover {
+.clear-btn:hover {
   transform: translateY(-2px);
-  opacity: 0.95;
+  box-shadow: 0 10px 24px rgba(109, 40, 217, 0.35);
 }
 
 .main-content {
-  max-width: var(--container);
+  max-width: 1200px;
   margin: 0 auto;
   padding: 10px 20px 40px;
 }
@@ -188,269 +181,237 @@ body {
   justify-content: space-between;
   align-items: end;
   gap: 16px;
-  margin-bottom: 22px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
 }
 
 .section-header h2 {
-  font-size: 1.7rem;
+  font-size: clamp(1.4rem, 2vw, 2rem);
   margin-bottom: 6px;
 }
 
 .section-header p {
   color: var(--muted);
-}
-
-.library-stats span {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.07);
-  color: #dfe8ff;
-  padding: 10px 14px;
-  border-radius: 999px;
   font-size: 0.95rem;
 }
 
-/* =========================
-   GRID / CARDS
-========================= */
+.section-header code {
+  background: rgba(255,255,255,0.08);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.library-stats {
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--line);
+  color: #ddd6fe;
+  font-weight: 700;
+}
+
 .games-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+  gap: 22px;
 }
 
 .game-card {
-  background: var(--card);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-xl);
+  position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--card-strong), var(--card));
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
   transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
 }
 
 .game-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(124, 92, 255, 0.35);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+  transform: translateY(-8px);
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.45);
+}
+
+.game-image-wrapper {
+  position: relative;
+  overflow: hidden;
 }
 
 .game-image {
   width: 100%;
-  height: 220px;
+  height: 210px;
   object-fit: cover;
   display: block;
-  background: linear-gradient(135deg, #17203d, #0f1730);
   transition: transform 0.35s ease;
+  background: #0d0d15;
 }
 
 .game-card:hover .game-image {
-  transform: scale(1.03);
+  transform: scale(1.05);
+}
+
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.05) 0%,
+    rgba(0,0,0,0.12) 40%,
+    rgba(0,0,0,0.55) 100%
+  );
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  padding: 14px;
+}
+
+.game-type-badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.14);
+  backdrop-filter: blur(8px);
+}
+
+.badge-iframe {
+  background: rgba(34, 211, 238, 0.16);
+  color: #cffafe;
+}
+
+.badge-rom {
+  background: rgba(34, 197, 94, 0.16);
+  color: #dcfce7;
+}
+
+.game-year {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #e5e7eb;
+  background: rgba(0,0,0,0.35);
+  padding: 6px 10px;
+  border-radius: 999px;
 }
 
 .game-info {
   padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 }
 
 .game-title {
-  font-size: 1.15rem;
-  line-height: 1.35;
+  font-size: 1.1rem;
   font-weight: 800;
-  color: #ffffff;
+  margin-bottom: 8px;
+  line-height: 1.3;
 }
 
 .game-category {
   display: inline-block;
-  align-self: flex-start;
-  padding: 6px 12px;
+  margin-bottom: 12px;
+  padding: 6px 10px;
   border-radius: 999px;
-  font-size: 0.75rem;
+  background: rgba(139, 92, 246, 0.12);
+  color: #ddd6fe;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.03em;
-  background: rgba(124, 92, 255, 0.18);
-  border: 1px solid rgba(124, 92, 255, 0.35);
-  color: #ddd3ff;
+  letter-spacing: 0.4px;
 }
 
 .game-description {
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.55;
-  min-height: 68px;
+  min-height: 64px;
 }
 
 .game-tags {
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
-  margin-top: 4px;
+  flex-wrap: wrap;
+  margin-top: 14px;
 }
 
 .tag {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
   padding: 6px 10px;
   border-radius: 999px;
   background: rgba(255,255,255,0.06);
-  color: #d9e3ff;
-  border: 1px solid rgba(255,255,255,0.06);
-}
-
-/* =========================
-   EMPTY STATE
-========================= */
-.empty-state {
-  grid-column: 1 / -1;
-  background: rgba(16, 24, 44, 0.72);
   border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 24px;
-  padding: 40px 24px;
-  text-align: center;
-  box-shadow: var(--shadow);
+  color: #d1d5db;
 }
 
-.empty-state p {
-  color: var(--muted);
-  font-size: 1rem;
-}
-
-/* =========================
-   GAME PAGE (NOVO - SAFE MODE)
-========================= */
-.game-page {
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: 28px 20px 40px;
-}
-
-.game-topbar {
+.game-actions {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
-}
-
-.game-shell {
-  background: rgba(16, 24, 44, 0.76);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 28px;
-  padding: 22px;
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-
-.game-header {
-  margin-bottom: 18px;
-}
-
-.game-header h1 {
-  font-size: clamp(1.6rem, 3vw, 2.6rem);
-  margin-bottom: 10px;
-}
-
-.game-header p {
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-.player-frame-wrap {
-  width: 100%;
-  border-radius: 22px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: #05070f;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
-}
-
-.player-frame {
-  width: 100%;
-  height: min(78vh, 820px);
-  border: none;
-  display: block;
-  background: #000;
-}
-
-.game-meta {
-  margin-top: 18px;
-  display: flex;
-  flex-wrap: wrap;
   gap: 10px;
-}
-
-.meta-pill {
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.06);
-  color: #dfe8ff;
-  font-size: 0.85rem;
-}
-
-.game-error {
-  padding: 18px;
-  border-radius: 18px;
-  background: rgba(255, 80, 80, 0.12);
-  border: 1px solid rgba(255, 80, 80, 0.25);
-  color: #ffd4d4;
   margin-top: 16px;
 }
 
-/* =========================
-   FOOTER
-========================= */
-.site-footer {
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: 10px 20px 40px;
+.play-btn {
+  flex: 1;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-weight: 800;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--purple), var(--purple-2));
+  color: #fff;
+  transition: 0.25s ease;
+}
+
+.play-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(109, 40, 217, 0.35);
+}
+
+.secondary-btn {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  background: rgba(255,255,255,0.04);
+  color: #e5e7eb;
+  transition: 0.25s ease;
+}
+
+.secondary-btn:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.empty-state {
+  grid-column: 1 / -1;
   text-align: center;
+  padding: 40px 20px;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.04);
+  color: var(--muted);
 }
 
-.site-footer p {
-  color: #8ea0c5;
-  font-size: 0.92rem;
+.site-footer {
+  text-align: center;
+  padding: 24px 20px 40px;
+  color: #94a3b8;
+  font-size: 0.9rem;
 }
 
-/* =========================
-   RESPONSIVO
-========================= */
 @media (max-width: 768px) {
   .hero {
-    padding: 20px 14px 18px;
+    padding-top: 28px;
   }
 
   .hero-content {
     padding: 22px;
-    border-radius: 22px;
-  }
-
-  .main-content,
-  .game-page {
-    padding: 8px 14px 28px;
   }
 
   .game-image {
     height: 190px;
   }
 
-  .section-header h2 {
-    font-size: 1.4rem;
-  }
-
-  .player-frame {
-    height: 62vh;
-  }
-
-  .game-shell {
-    padding: 16px;
-    border-radius: 22px;
+  .game-actions {
+    flex-direction: column;
   }
 }

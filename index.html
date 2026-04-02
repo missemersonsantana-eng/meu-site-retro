@@ -13,11 +13,11 @@
 
   <header class="hero">
     <div class="hero-content">
-      <span class="hero-badge">🎮 Arcade • Retro • EmulatorJS</span>
+      <span class="hero-badge">🎮 Arcade • Retro • EmulatorJS • ELITE</span>
       <h1>RetroGames Hub</h1>
       <p>
         Sua central retrô com jogos via <strong>iframe</strong>,
-        ROMs <strong>NES</strong> e <strong>SNES</strong>.
+        ROMs <strong>NES</strong> e <strong>SNES</strong>, com visual premium.
       </p>
 
       <div class="hero-actions">
@@ -29,8 +29,7 @@
         />
         <button
           class="clear-btn"
-          id="clearSearchBtn"
-          type="button"
+          onclick="document.getElementById('searchInput').value=''; renderGames();"
         >
           Limpar
         </button>
@@ -42,7 +41,7 @@
     <section class="section-header">
       <div>
         <h2>Biblioteca de Jogos</h2>
-        <p>Seus jogos são carregados dinamicamente pelo <code>script.js</code>.</p>
+        <p>Jogos carregados dinamicamente pelo <code>script.js</code>.</p>
       </div>
       <div class="library-stats">
         <span id="gameCount">0 jogos</span>
@@ -55,25 +54,8 @@
   </main>
 
   <footer class="site-footer">
-    <p>RetroGames Hub • V4.5 MASTER DEFINITIVA • Compatível com seu script.js real</p>
+    <p>RetroGames Hub • V4.9 ELITE ABSOLUTE • Premium Visual + ROM Auto/Manual</p>
   </footer>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const clearBtn = document.getElementById("clearSearchBtn");
-      const searchInput = document.getElementById("searchInput");
-
-      if (clearBtn && searchInput) {
-        clearBtn.addEventListener("click", () => {
-          searchInput.value = "";
-          if (typeof renderGames === "function") {
-            renderGames();
-          }
-          searchInput.focus();
-        });
-      }
-    });
-  </script>
 
   <script src="script.js"></script>
 </body>

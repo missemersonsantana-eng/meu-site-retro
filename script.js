@@ -78,6 +78,18 @@ const games = [
     romPath: null,
     allowFileSelect: true,
     tags: ["NES", "SNES", "UPLOAD"]
+  },
+  {
+    id: 8,
+    title: "Futebol Brasileiro 96",
+    year: "1996",
+    category: "CUSTOM",
+    description: "Futebol Brasileiro 96 é um hack de FIFA 96 com times brasileiros. Jogue com seu time favorito!",
+    image: "assets/images/fut96.jpg",
+    type: "rom",
+    system: "snes",
+    romPath: "games/meu-jogo/Futebol Brasileiro '96.smc",
+    tags: ["SNES", "CUSTOM", "LOCAL"]
   }
 ];
 

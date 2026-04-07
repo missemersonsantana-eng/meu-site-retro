@@ -56,14 +56,14 @@ const games = [
   },
   {
     id: 6,
-    title: "Meu Jogo SNES",
+    title: "Disney's Aladdin",
     year: "1994",
-    category: "CUSTOM",
-    description: "Minha ROM local para testar o emulador!",
-    image: "assets/images/meu-jogo.jpg",
+    category: "ARCADE",
+    description: "Salve a Princesa Jasmine",
+    image: "assets/images/DisneysAladdin.jpg",
     type: "rom",
     system: "snes",
-    romPath: "games/meu-jogo/rom.smc",
+    romPath: "games/meu-jogo/DisneysAladdin.smc",
     tags: ["SNES", "CUSTOM", "LOCAL"]
   },
   {
